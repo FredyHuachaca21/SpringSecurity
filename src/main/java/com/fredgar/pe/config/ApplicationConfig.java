@@ -19,12 +19,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class ApplicationConfig {
   private final UserRepository userRepository;
 
+  // Define el UserDetailsService personalizado para buscar usuarios por correo electrónico
   @Bean
   public UserDetailsService userDetailsService() {
     return username -> userRepository.findByEmail(username)
         .orElseThrow(()-> new UsernameNotFoundException("User not found"));
   }
 
+  // Configura el AuthenticationProvider utilizando el UserDetailsService personalizado y un codificador de contraseñas
   @Bean
   public AuthenticationProvider authenticationProvider() {
     DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
@@ -33,11 +35,13 @@ public class ApplicationConfig {
     return authenticationProvider;
   }
 
+  // Bean de AuthenticationManager utilizando la configuración de autenticación de Spring Security
   @Bean
   public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
     return configuration.getAuthenticationManager();
   }
 
+  // Define el codificador de contraseñas como BCryptPasswordEncoder
   @Bean
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();

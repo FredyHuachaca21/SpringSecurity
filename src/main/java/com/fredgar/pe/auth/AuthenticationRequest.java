@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+//Clase representa una solicitud de autenticación
 @Data
 @Builder
 @AllArgsConstructor
